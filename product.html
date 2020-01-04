@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <div id="root">
+        <div class="container">
+            <h1>Production House Data</h1>
+            <button class="add" @click="showingAddModal = true">Add New</button>
+            <div class="clear"></div>
+            <hr>
+            <table class="list">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                <tr v-for ="ph in productionHouses">
+                    <td>{{ph.id}}</td>
+                    <td>{{ph.name}}</td>
+                    <td><button @click="showingEditModal = true; chooseProHouse(ph)">Edit</button></td>
+                    <td><button @click="showingDeleteModal = true; chooseProHouse(ph)">Delete</button></td>
+                </tr>
+                
+            </table>
+        </div>
+    
+        <div class="modal" id="addModal" v-if="showingAddModal">
+            <div class="modalContainer">
+                <div class="modalHeading">
+                    <p class="fleft"> Add New Production House </p>
+                    <button class="fright close" @click="showingAddModal = false">
+                        X
+                    </button>
+                    <div class="clear">					
+                    </div>
+                </div>
+    
+                <div class="modalContent">
+                    <table class="form">
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th> : </th>
+                            <td>
+                                <input type="text" name="id" v-model="newProHouse.id">
+                            </td>
+                        </tr>
+    
+                        <tr>
+                            <th>
+                                NAME
+                            </th>
+                            <th> : </th>
+                            <td>
+                                <input type="text" name="name" v-model="newProHouse.name">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                            </th>
+                            <th> </th>
+                            <td>
+                                <button @click="showingAddModal = false; saveProHouse() ">Save</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>			
+            </div>
+        </div>
+    
+    
+        <div class="modal" id="editModal" v-if="showingEditModal">
+            <div class="modalContainer">
+                <div class="modalHeading">
+                    <p class="fleft"> Edit Production House </p>
+                    <button class="fright close" @click="showingEditModal = false">
+                        X
+                    </button>
+                    <div class="clear">					
+                    </div>
+                </div>
+    
+                <div class="modalContent">
+                    <table class="form">
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th> : </th>
+                            <td>
+                                <input type="text" readonly="true" name="id" v-model="editProHouse.id">
+                            </td>
+                        </tr>
+    
+                        <tr>
+                            <th>
+                                NAME
+                            </th>
+                            <th> : </th>
+                            <td>
+                                <input type="text" name="name" v-model="editProHouse.name">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>
+                            </th>
+                            <th> </th>
+                            <td>
+                                <button @click="showingEditModal = false; updateProHouse()">Update</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>			
+            </div>
+        </div>
+    
+    
+        <div class="modal" id="deleteModal" v-if="showingDeleteModal">
+            <div class="modalContainer">
+                <div class="modalHeading">
+                    <p class="fleft"> Warning!! </p>
+                    <button class="fright close" @click="showingDeleteModal = false">
+                        X
+                    </button>
+                    <div class="clear">					
+                    </div>
+                </div>
+    
+                <div class="modalContent">
+                    Are you sure to delete {{editProHouse.name}} ?
+                   
+                    <button @click="showingDeleteModal = false; delProHouse()">Yes</button>
+                    <button @click="showingDeleteModal = false">No</button>
+    
+                </div>			
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="axios.js"></script>
+    <script type="text/javascript" src="vue.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <div id="root">
+        <div class="container">
+            <h1>Movie Data</h1>
+            <button class="add" @click="showingAddModal = true">Add New</button>
+            <div class="clear"></div>
+            <hr>
+            <table class="list">
+                <tr>
+                    <th>ID</th>
+                    <th>Movie</th>
+                    <th>Genre</th>
+                    <th>Production House</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                <tr v-for ="mv in movieData">
+                    <td>{{mv.id}}</td>
+                    <td>{{mv.movie}}</td>
+                    <td>{{mv.genre}}</td>
+                    <td>{{mv.name}}</td>
+                    <td><button @click="showingEditModal = true; chooseMvData(mv)">Edit</button></td>
+                    <td><button @click="showingDeleteModal = true; chooseMvData(mv)">Delete</button></td>
+                </tr>
+                
+            </table>
+        </div>
+    
+        <div class="modal" id="addModal" v-if="showingAddModal">
+            <div class="modalContainer">
+                <div class="modalHeading">
+                    <p class="fleft"> Add New Movie </p>
+                    <button class="fright close" @click="showingAddModal = false">
+                        X
+                    </button>
+                    <div class="clear">					
+                    </div>
+                </div>
+    
+                <div class="modalContent">
+                    <table class="form">
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th> : </th>
+                            <td>
+                                <input type="text" v-model="newMovieData.id">
+                            </td>
+                        </tr>
+    
+                        <tr>
+                            <th>
+                                MOVIE NAME
+                            </th>
+                            <th> : </th>
+                            <td>
+                                <input type="text" v-model="newMovieData.movie">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                GENRE
+                            </th>
+                            <th> : </th>
+                            <td>
+                                <input type="text" v-model="newMovieData.genre">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                PRODUCTION HOUSE
+                            </th>
+                            <th> : </th>
+                            <td>
+                                <select v-model="newMovieData.productionhouseid">
+                                    <option v-for="ph in productionHouses" :value="ph.id">{{ph.name}}</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                            </th>
+                            <th> </th>
+                            <td>
+                                <button @click="showingAddModal = false; saveMovieData() ">Save</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>			
+            </div>
+        </div>
+    
+    
+        <div class="modal" id="editModal" v-if="showingEditModal">
+            <div class="modalContainer">
+                <div class="modalHeading">
+                    <p class="fleft"> Edit Movie Data </p>
+                    <button class="fright close" @click="showingEditModal = false">
+                        X
+                    </button>
+                    <div class="clear">					
+                    </div>
+                </div>
+    
+                <div class="modalContent">
+                    <table class="form">
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th> : </th>
+                            <td>
+                                <input type="text" v-model="editMovieData.id">
+                            </td>
+                        </tr>
+    
+                        <tr>
+                            <th>
+                                MOVIE NAME
+                            </th>
+                            <th> : </th>
+                            <td>
+                                <input type="text" v-model="editMovieData.movie">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                GENRE
+                            </th>
+                            <th> : </th>
+                            <td>
+                                <input type="text" v-model="editMovieData.genre">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                PRODUCTION HOUSE
+                            </th>
+                            <th> : </th>
+                            <td>
+                                <select v-model="editMovieData.idph">
+                                    <option v-for="ph in productionHouses" :selected="editMovieData.idph==ph.id" :value="ph.id">{{ph.name}}</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>
+                            </th>
+                            <th> </th>
+                            <td>
+                                <button @click="showingEditModal = false; updateMovieData()">Update</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>			
+            </div>
+        </div>
+    
+    
+        <div class="modal" id="deleteModal" v-if="showingDeleteModal">
+            <div class="modalContainer">
+                <div class="modalHeading">
+                    <p class="fleft"> Warning!! </p>
+                    <button class="fright close" @click="showingDeleteModal = false">
+                        X
+                    </button>
+                    <div class="clear">					
+                    </div>
+                </div>
+    
+                <div class="modalContent">
+                    Are you sure to delete <b>{{editMovieData.movie}}</b> ?
+                   
+                    <button @click="showingDeleteModal = false; delMovieData()">Yes</button>
+                    <button @click="showingDeleteModal = false">No</button>
+    
+                </div>			
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="axios.js"></script>
+    <script type="text/javascript" src="vue.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+</body>
+</html>
